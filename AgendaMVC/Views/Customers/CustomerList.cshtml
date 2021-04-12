@@ -1,0 +1,77 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<AgendaMVC.Models.customers>
+
+
+
+@{
+    ViewBag.Title = "CustomerList";
+}
+
+<h2>Liste client</h2>
+@using (Html.BeginForm("CustomerList", "Customers", FormMethod.Get))
+{   
+    @Html.DropDownList("searchBy",null,  new { @class = "me-1"  })
+    @Html.TextBox("search")
+    <input type="submit" value="search" />
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="successMessage">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<p>
+    @Html.ActionLink("Ajouter un client", "AddCustomer")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().lastname);
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().phoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().budget)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.budget)
+            </td>
+            <td>
+                @Html.ActionLink("Editer", "EditCustomer", new { id = item.idCustomer }) |
+                @Html.ActionLink("Profil", "ProfilCustomer", new { id = item.idCustomer }) |
+                @Html.ActionLink("Supprimer", "DeleteCustomer", new { id = item.idCustomer }, new { onclick = "return confirm('Voulez-vous supprimer ce client de la liste ?')" })
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("CustomerList", new { page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded }) 

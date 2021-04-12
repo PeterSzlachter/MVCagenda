@@ -1,0 +1,36 @@
+﻿body {
+    padding-top: 10vh;
+    padding-bottom: 20px;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.content {
+    min-height: 100%;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-bottom: 50px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+footer {
+    padding-top:10px;
+    margin-top: -30px;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    border-top : 3px double black;
+}
+.successMessage {
+    font-weight: bolder;
+    color: forestgreen;
+}

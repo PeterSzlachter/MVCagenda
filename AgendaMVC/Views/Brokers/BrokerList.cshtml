@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AgendaMVC.Models.brokers>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Liste courtier</h2>
+
+<p>
+    @Html.ActionLink("Ajouter un courtier", "AddBroker")
+</p>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="successMessage">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.firstname)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstname)
+            </td>
+            <td>
+                @Html.ActionLink("Éditer", "EditBroker", new { id = item.idBroker }) |
+                @Html.ActionLink("Profil", "ProfilBroker", new { id = item.idBroker }) |
+                @Html.ActionLink("Supprimer", "DeleteBroker", new { id = item.idBroker }, new { onclick = "return confirm('Voulez-vous supprimer ce client de la liste ?')"})
+            </td>
+        </tr>
+    }
+</table>

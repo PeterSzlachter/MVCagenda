@@ -1,0 +1,10 @@
+﻿@model AgendaMVC.Models.appointments
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Accueil - MonAgenda</h2>
+
+@{ Html.RenderAction("AppointmentList", "Appointments");}

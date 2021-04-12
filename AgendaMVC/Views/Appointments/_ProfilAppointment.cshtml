@@ -1,0 +1,41 @@
+﻿@model AgendaMVC.Models.appointments
+
+<div>
+    @TempData["Date"]
+    <h4>appointments</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dateHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.brokers.lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.brokers.lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customers.lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customers.lastname)
+        </dd>
+
+    </dl>
+</div>
