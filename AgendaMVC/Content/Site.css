@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 10vh;
     padding-bottom: 20px;
 }
 html, body {
@@ -12,7 +11,8 @@ html, body {
 }
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-bottom: 50px;
+    padding-bottom:50px;
+    padding-top: 10vh;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -22,15 +22,153 @@ textarea {
     max-width: 280px;
 }
 
-footer {
-    padding-top:10px;
-    margin-top: -30px;
-    height: 50px;
-    width: 100%;
-    text-align: center;
-    border-top : 3px double black;
-}
+
 .successMessage {
     font-weight: bolder;
     color: forestgreen;
 }
+.otable {
+    overflow-x: auto;
+}
+
+body {
+    --text-color: #222;
+    --bkg-color: #fff;
+    --nav-color: #124559;
+    --navtext-color: white;
+    --link-color: #124559;
+    --linkhover-color: #FF7F11;
+    --bkgtable-color: #A7CCED;
+}
+
+    body.dark-theme {
+        --text-color: #eee;
+        --bkg-color: #124559;
+        --nav-color: #598392;
+        --navtext-color: white;
+        --link-color: #A7CCED;
+        --linkhover-color: #FF7F11;
+        --bkgtable-color: #598392;
+    }
+
+@media (prefers-color-scheme: dark) {
+    /* defaults to dark theme */
+    body {
+        --text-color: #eee;
+        --bkg-color: #124559;
+        --nav-color: #598392;
+        --navtext-color: white;
+        --link-color: #A7CCED;
+        --linkhover-color: #FF7F11;
+        --bkgtable-color: #598392;
+    }
+
+    .body-content a:hover {
+            color: var(--linkhover-color);
+        }
+
+    body.light-theme {
+        --text-color: #222;
+        --bkg-color: #fff;
+        --nav-color: #124559;
+        --navtext-color: white;
+        --link-color: #124559;
+        --linkhover-color: #FF7F11;
+        --bkgtable-color: #A7CCED;
+    }
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav {
+    background: var(--nav-color);
+}
+body {
+    background: var(--bkg-color);
+    color: var(--text-color);
+}
+.otable {
+    background: var(--bkgtable-color);
+    border-radius: 10px;
+    text-align:center;
+}
+.table {
+    color: var(--text-color);
+}
+footer {
+    margin-top: -40px;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    border-top: 3px double var(--text-color);
+}
+    footer div {
+        padding-top:10px;       
+    }
+
+    footer a {
+        color: var(--link-color);
+        text-decoration: none;
+        font-weight: bolder;
+        cursor:pointer;
+    }
+    footer a:hover{
+        color: var(--bkgtable-color);
+    }
+
+.body-content a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: bolder;
+}
+.dropdown-menu {
+    background:var(--nav-color);
+    border-radius:10px;
+}
+.dropdown-item {
+    color: var(--navtext-color);
+}
+.search{
+    background: var(--nav-color);
+    color:white;
+}
+    .search:hover {
+        color: white;
+        background: var(--linkhover-color);
+    }
+.table th {
+    font-weight:bolder;
+    font-size:1.2em;
+}
+input[type = "submit"] {
+
+    font-weight:bolder;
+    border-radius:15px;
+    background: var(--nav-color);
+    border : none;
+    color:white;
+    padding: 10px 40px 10px 40px;
+    margin:auto;
+}
+input[type = "submit"]:hover {
+    background : var(--linkhover-color);
+}
+    input[type = "submit"]:active {
+        box-shadow: 0px 0px 4px 4px var(--linkhover-color);
+    }
+
+
+
+
+
+/*.dark-mode {
+    background-color: #2e3432;
+    color: white;
+}
+.dark-mode table {color:white}
+    .dark-mode footer {
+        border-top: 3px double white;
+    }
+.dark-mode .navbar {background-color: #87e7e1;}*/

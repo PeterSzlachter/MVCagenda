@@ -15,31 +15,36 @@
         @TempData["SuccessMessage"]
     </div>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.lastname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.firstname)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<div class="otable">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.lastname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.firstname)
-            </td>
-            <td>
-                @Html.ActionLink("Éditer", "EditBroker", new { id = item.idBroker }) |
-                @Html.ActionLink("Profil", "ProfilBroker", new { id = item.idBroker }) |
-                @Html.ActionLink("Supprimer", "DeleteBroker", new { id = item.idBroker }, new { onclick = "return confirm('Voulez-vous supprimer ce client de la liste ?')"})
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.firstname)
+            </th>
+            <th></th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.firstname)
+                </td>
+                <td>
+                    @Html.ActionLink("Éditer", "EditBroker", new { id = item.idBroker }) |
+                    @Html.ActionLink("Profil", "ProfilBroker", new { id = item.idBroker }) |
+                    @Html.ActionLink("Supprimer", "DeleteBroker", new { id = item.idBroker }, new { onclick = "return confirm('Voulez-vous supprimer ce client de la liste ?')" }) |
+                    @Html.ActionLink("Prendre un RDV", "AddAppointment", "Appointments", new { id = item.idBroker }, null)
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>

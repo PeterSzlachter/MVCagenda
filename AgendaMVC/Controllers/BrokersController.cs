@@ -29,8 +29,10 @@ namespace AgendaMVC.Controllers
                 db.brokers.Add(broker);
                 db.SaveChanges();
                 TempData["SuccessMessage"] = "Courtier enregistré";
+                return RedirectToAction("BrokerList");
             }
-            return RedirectToAction("BrokerList");
+            return View(broker);
+
         }
 
         public ActionResult BrokerList()

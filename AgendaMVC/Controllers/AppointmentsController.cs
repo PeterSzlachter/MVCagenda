@@ -19,14 +19,16 @@ namespace AgendaMVC.Controllers
 
         public ActionResult Index()
         {
-            //var appointment = db.appointments.Include(a => a.brokers).Include(a => a.customers);
+            var appointment = db.appointments.Include(a => a.brokers).Include(a => a.customers);
             return View();
         }
         // GET: Appointments
-        public ActionResult AddAppointment()
+        public ActionResult AddAppointment(int? id)
         {
-            ViewBag.idCustomer = new SelectList(db.customers, "idCustomer", "lastname");
-            ViewBag.idBroker = new SelectList(db.brokers, "idBroker", "lastname");
+            brokers broker = db.brokers.Find(id);
+            if (id != null) { ViewBag.idBroker = new SelectList(db.brokers, "idBroker", "fullName", broker.idBroker); }
+            else { ViewBag.idBroker = new SelectList(db.brokers, "idBroker", "fullName"); }
+            ViewBag.idCustomer = new SelectList(db.customers, "idCustomer", "fullName");
             return View();
         }
 
@@ -36,34 +38,33 @@ namespace AgendaMVC.Controllers
 
         public ActionResult AddAppointment(appointments appointment)
         {
-            DateTime dateAppointment = appointment.dateHour;
-            DateTime dateAppointmentEnd = appointment.dateHour.AddMinutes(30);
-            var rangeAppointment = appointment.dateHour.CompareTo(dateAppointmentEnd);
-            if (db.appointments.Where(a => a.idBroker == appointment.idBroker).Any() && db.appointments.Where(a => a.dateHour == appointment.dateHour).Any() && db.appointments.Where(a => a.dateHour <= dateAppointmentEnd).Any())
-            {
-                ModelState.AddModelError("idBroker", "Time not available.");
-                TempData["SuccessMessage"] = "Rendez-vous failed";
-            }
-            else
-            {
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
                 {
-                    
-                    db.appointments.Add(appointment);
-                    db.SaveChanges();
-                    TempData["SuccessMessage"] = "Rendez-vous enregistré";
-                    return RedirectToAction("Index", "Home");
+                bool checkDate = db.appointments.SqlQuery("SELECT * FROM appointments WHERE idBroker = '" + appointment.idBroker + "' AND dateHour BETWEEN '" + appointment.dateHour.AddMinutes(-30).ToString("yyyyMMdd HH:mm:ss") + "' AND '" + appointment.dateHour.ToString("yyyyMMdd HH:mm:ss") +"'").ToList().Any();
+              
+                if (checkDate)
+                {
+                    ModelState.AddModelError("idBroker", "Time not available.");
+                    TempData["SuccessMessage"] = "Rendez-vous failed";
                 }
-            }
-                ViewBag.idBroker = new SelectList(db.brokers, "idBroker", "lastname", appointment.idBroker);
-                ViewBag.idCustomer = new SelectList(db.customers, "idCustomer", "lastname", appointment.idCustomer);
-                return View(appointment);
+
+                else
+                {
+                    db.appointments.Add(appointment);
+                        db.SaveChanges();
+                        TempData["SuccessMessage"] = "Rendez-vous enregistré avec succès";
+                        return RedirectToAction("Index", "Home");
+                     }
+                 }
+            ViewBag.idBroker = new SelectList(db.brokers, "idBroker", "fullName");
+            ViewBag.idCustomer = new SelectList(db.customers, "idCustomer", "fullName");
+            return View(appointment);
             
         }
 
         public ActionResult AppointmentList()
         {
-            var appointment = db.appointments.ToList();
+            var appointment = db.appointments.ToList().OrderBy(x=>x.dateHour);
             return PartialView(appointment);
         }
 
@@ -97,8 +98,8 @@ namespace AgendaMVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.idBroker = new SelectList(db.brokers, "idBroker", "lastname", appointment.idBroker);
-            ViewBag.idCustomer = new SelectList(db.customers, "idCustomer", "lastname", appointment.idCustomer);
+            ViewBag.idBroker = new SelectList(db.brokers, "idBroker", "fullName",appointment.idBroker);
+            ViewBag.idCustomer = new SelectList(db.customers, "idCustomer", "fullName",appointment.idCustomer);
             return View(appointment);
         }
 

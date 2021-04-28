@@ -21,6 +21,7 @@ namespace AgendaMVC.Models
         public int idAppointment { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-ddTHH:mm}")]
         [Display(Name = "Date")]
         public System.DateTime dateHour { get; set; }
         [Required]
@@ -30,7 +31,7 @@ namespace AgendaMVC.Models
         public int idCustomer { get; set; }
         [Display(Name = "Courtier")]
         public int idBroker { get; set; }
-    
+
         public virtual brokers brokers { get; set; }
         public virtual customers customers { get; set; }
     }

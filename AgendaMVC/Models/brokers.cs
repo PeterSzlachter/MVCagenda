@@ -44,6 +44,9 @@ namespace AgendaMVC.Models
         [Display(Name = "Numéro de téléphone")]
         public string phoneNumber { get; set; }
 
+        [Display(Name = "Courtier")]
+        public string fullName => $"{lastname} {firstname}";
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointments> appointments { get; set; }
     }

@@ -9,44 +9,53 @@
         @TempData["SuccessMessage"]
     </div>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.dateHour)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.subject)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.idBroker)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.idCustomer)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model) 
-    {
+<div class="otable">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.dateHour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.brokers.lastname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.customers.lastname)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditAppointment", new { id = item.idAppointment }) |
-                @Html.ActionLink("Détail", "ProfilAppointment", new { id = item.idAppointment } ) |
-                @Html.ActionLink("Supprimer", "DeleteAppointment", new { id = item.idAppointment }, new { onclick = "return confirm('Voulez-vous supprimer ce rendez-vous de la liste ?')" })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.dateHour)
+            </th>
+            <th>
+                @Html.DisplayName("Date de fin")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.brokers.fullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customers.fullName)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Convert.ToDateTime(item.dateHour).ToString("dd/MM/yyyy HH:mm")
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.dateHour).AddMinutes(30).ToString("dd/MM/yyyy HH:mm")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.subject)
+                </td>
+                <td>
+                    <a href="@Url.Action("ProfilBroker","Brokers", new { id = item.idBroker })">@Html.DisplayFor(modelItem => item.brokers.fullName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.customers.fullName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditAppointment", new { id = item.idAppointment }) |
+                    @Html.ActionLink("Détail", "ProfilAppointment", new { id = item.idAppointment }) |
+                    @Html.ActionLink("Supprimer", "DeleteAppointment", new { id = item.idAppointment }, new { onclick = "return confirm('Voulez-vous supprimer ce rendez-vous de la liste ?')" })
+                </td>
+
+            </tr>
+        }
+    </table>
+</div>

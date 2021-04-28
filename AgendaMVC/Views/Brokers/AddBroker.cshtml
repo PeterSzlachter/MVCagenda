@@ -7,7 +7,7 @@
 @using (Html.BeginForm("AddBroker", "Brokers", FormMethod.Post))
 {
     <fieldset>
-        <div class="form">
+        <div class="form ">
             <h2>Ajout de courtier</h2>
             <hr />
 
@@ -18,7 +18,7 @@
                     @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class=" row form-group">
+            <div class=" row form-group mt-2">
                 @Html.LabelFor(model => model.lastname, htmlAttributes: new { @class = "control-label" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control" } })
@@ -26,14 +26,14 @@
                 </div>
             </div>
 
-            <div class="row form-group">
+            <div class="row form-group mt-2" >
                 @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="row form-group">
+            <div class="row form-group my-2">
                 @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control" } })
@@ -41,7 +41,7 @@
                 </div>
             </div>
             
-            <input type="submit" value="Add" class="btn btn-danger mt-3" />
+            <input type="submit" value="Ajouter" class="my-4" />
             
                 @if (TempData["SuccessMessage"] != null)
                     {

@@ -44,8 +44,10 @@ namespace AgendaMVC.Models
         [Display(Name = "Bugdet")]
         [DataType(DataType.Currency)]
         public int budget { get; set; }
+        [Display(Name = "Client")]
+        public string fullName => $"{lastname} {firstname}";
 
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointments> appointments { get; set; }
     }

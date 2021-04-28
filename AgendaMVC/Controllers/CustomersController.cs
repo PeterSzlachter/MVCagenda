@@ -40,40 +40,42 @@ namespace AgendaMVC.Controllers
                 db.customers.Add(customer);
                 db.SaveChanges();
                 TempData["SuccessMessage"] = "Client enregistré";
+                return RedirectToAction("CustomerList");
             }
-            return RedirectToAction("CustomerList");
+            return View(customer);
+            
         }
         public ActionResult CustomerList(string searchBy, string search, int? page)
         {
-            var searchList = new List<string>() { "Name", "Firstname", "Mail", "Phone number", "Budget" };
+            var searchList = new List<string>() { "Nom", "Prénom", "Courriel", "Numéro de téléphone" };
             ViewBag.searchBy = new SelectList(searchList);
-            var customers = db.customers.SqlQuery("select * from customers order by lastname").ToList().ToPagedList(page ?? 1, 7);
+            var customers = db.customers.SqlQuery("select * from customers order by lastname").ToList().ToPagedList(page ?? 1, 9);
 
-            if (searchBy == "Name")
+            if (searchBy == "Nom")
             {
-                return View(db.customers.Where(x => x.lastname.Contains(search) || search == null).ToList().ToPagedList(page ?? 1, 7));
+                return View(db.customers.Where(x => x.lastname.Contains(search) || search == null).ToList().OrderBy(x => x.lastname).ToPagedList(page ?? 1, 9));
             }
-            else if (searchBy == "Firstname")
+            else if (searchBy == "Prénom")
             {
-                return View(db.customers.Where(x => x.firstname.Contains(search) || search == null).ToList().ToPagedList(page ?? 1, 7));
+                return View(db.customers.Where(x => x.firstname.Contains(search) || search == null).ToList().OrderBy(x => x.lastname).ToPagedList(page ?? 1, 9));
             }
-            else if (searchBy == "Mail")
+            else if (searchBy == "Courriel")
             {
-                return View(db.customers.Where(x => x.mail.Contains(search) || search == null).ToList().ToPagedList(page ?? 1, 7));
+                return View(db.customers.Where(x => x.mail.Contains(search) || search == null).ToList().OrderBy(x => x.lastname).ToPagedList(page ?? 1, 9));
             }
-            else if (searchBy == "Phone number")
+            else if (searchBy == "Numéro de téléphone")
             {
-                return View(db.customers.Where(x => x.phoneNumber.Contains(search) || search == null).ToList().ToPagedList(page ?? 1, 7));
+                return View(db.customers.Where(x => x.phoneNumber.Contains(search) || search == null).ToList().OrderBy(x => x.lastname).ToPagedList(page ?? 1, 9));
             }
 
-            if (search != null)
-            {
-               customers = db.customers.Where(x => x.lastname.Contains(search) || search == null).ToList().ToPagedList(page ?? 1, 7);
-            }
-            else if (search == "")
+            else if (search != null && searchBy == "Nom")
             {
                 return View(customers);
-            }       
+            }
+            //if (search != null)
+            //{
+            //   customers = db.customers.Where(x => x.lastname.Contains(search) || search == null).ToList().ToPagedList(page ?? 1, 7);
+            //}
             return View(customers);
         }
         public ActionResult DeleteCustomer(int id)
